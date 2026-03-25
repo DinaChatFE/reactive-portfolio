@@ -1,26 +1,66 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 240 9.8% 6.1%;
+    --foreground: 280 43% 98%;
+
+    --card: 240 7.4% 8.4%;
+    --card-foreground: 280 43% 98%;
+
+    --popover: 240 6.1% 15.3%;
+    --popover-foreground: 280 43% 98%;
+
+    --primary: 16 100% 70.4%;
+    --primary-foreground: 0 0% 100%;
+
+    --primary-container: 16 96% 64.3%;
+
+    --secondary: 240 6.1% 15.3%;
+    --secondary-foreground: 280 43% 98%;
+
+    --muted: 240 6.1% 15.3%;
+    --muted-foreground: 260 3% 67.3%;
+
+    --accent: 278 100% 76.9%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6.1% 15.3%;
+    --input: 240 6.1% 15.3%;
+    --ring: 16 100% 70.4%;
+
+    --radius: 1rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground bg-[#0e0e11];
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-[16px] border border-white/10;
+  }
+  .glass-card {
+    @apply bg-[#131316]/60 backdrop-blur-[12px] border border-white/[0.08] shadow-[0_4px_40px_rgba(251,248,252,0.05)];
+  }
+  .glass-input {
+    @apply bg-[#25252a] border-b border-b-white/15 focus:border-b-primary focus:shadow-[0_0_16px_rgba(255,144,104,0.4)] focus:outline-none transition-all;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-[#fb7c4d] bg-clip-text text-transparent;
+  }
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-primary to-[#fb7c4d];
+  }
 }
