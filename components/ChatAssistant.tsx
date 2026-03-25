@@ -14,23 +14,11 @@ export default function ChatAssistant() {
   const containerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  const [input, setInput] = useState('');
-  const { messages, status, sendMessage } = useChat({
+  const { messages, status, input, handleInputChange, handleSubmit } = useChat({
     api: '/api/chat'
   });
 
   const isLoading = status === 'submitted' || status === 'streaming';
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (isLoading || !input.trim()) return;
-    sendMessage({ role: 'user', content: input } as any);
-    setInput('');
-  };
 
   const toggleChat = () => {
     setIsOpen(!isOpen);

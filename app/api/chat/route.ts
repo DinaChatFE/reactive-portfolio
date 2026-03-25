@@ -52,30 +52,11 @@ Contact Dina at dinachatfe5@gmail.com.`,
       messages: modelMessages,
       tools: {
         getInformation: tool({
-          description: 'Get information from your knowledge base to answer questions.',
-          inputSchema: z.object({
-            question: z.string().describe('The user\'s question'),
+          description: `get information from your knowledge base to answer questions by choosing the most similarity to response, if it doesn't have, you could response with "I don't have information about that"`,
+          parameters: z.object({
+            question: z.string().describe('the users question'),
           }),
-          execute: async ({ question }) => {
-            try {
-              const relevantContent = await findRelevantContent(question);
-
-              if (!relevantContent || relevantContent.length === 0) {
-                return {
-                  content: 'No relevant information found in the knowledge base.',
-                };
-              }
-
-              return {
-                content: relevantContent.map((r) => r.name).join('\n\n'),
-              };
-            } catch (error) {
-              console.error('Retrieval error:', error);
-              return {
-                error: 'Failed to retrieve information.',
-              };
-            }
-          },
+          execute: async ({ question }) => findRelevantContent(question),
         }),
       },
     });
