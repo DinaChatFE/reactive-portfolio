@@ -17,17 +17,17 @@ export default function Contact() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
               <span className="text-xs font-sans font-medium text-primary tracking-widest uppercase">
-                Currently taking projects
+                Open to networking
               </span>
             </div>
           </FadeIn>
 
           <FadeIn direction="right" delay={0.3} className="w-full">
             <h1 className="font-display font-bold text-5xl md:text-7xl leading-[1.1] tracking-[-0.02em] text-foreground mb-6">
-              Let&apos;s create something <span className="text-gradient italic">exceptional.</span>
+              Let&apos;s build a <span className="text-gradient italic">connection.</span>
             </h1>
             <p className="font-sans text-lg md:text-xl text-muted-foreground max-w-md leading-relaxed mb-12">
-              Please use the email input form to send me a message for more information and references. Or direct message me—let&apos;s talk!
+              Whether you&apos;re a recruiter, a fellow developer, or just want to chat about tech, I&apos;m always happy to connect and exchange ideas.
             </p>
           </FadeIn>
 

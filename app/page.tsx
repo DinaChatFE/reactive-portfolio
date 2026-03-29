@@ -3,7 +3,7 @@ import { FadeIn } from "@/components/animations/FadeIn";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, LayoutPanelLeft, Code, LineChart } from "lucide-react";
+import { Play, LayoutPanelLeft, Code, LineChart, Terminal, Database } from "lucide-react";
 
 export default function Home() {
   return (
@@ -42,9 +42,9 @@ export default function Home() {
         {/* SERVICES SECTION */}
         <section id="services" className="w-full mt-40 mx-auto max-w-6xl px-6 scroll-mt-32">
           <FadeIn delay={0.3}>
-            <h2 className="text-4xl font-display font-bold tracking-tight sm:text-5xl mb-4">Service & Skill</h2>
+            <h2 className="text-4xl font-display font-bold tracking-tight sm:text-5xl mb-4">Expertise & Skills</h2>
             <p className="text-muted-foreground text-lg max-w-xl mb-16">
-              A curated suite of technical expertises designed to elevate your brand from standard to spectacular.
+              A comprehensive suite of technical skills honed through building robust applications and impactful digital products.
             </p>
           </FadeIn>
           
@@ -80,8 +80,13 @@ export default function Home() {
           </FadeIn>
 
           <div className="grid gap-12 md:grid-cols-2">
-            <FadeIn delay={0.4} className="flex flex-col">
-              <span className="text-primary font-bold tracking-widest text-sm uppercase mb-2">2018 - 2022</span>
+            <FadeIn delay={0.4} className="flex flex-col group">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform duration-500 group-hover:scale-110">
+                  <Terminal className="w-6 h-6" />
+                </div>
+                <span className="text-primary font-bold tracking-widest text-sm uppercase">2018 - 2022</span>
+              </div>
               <h3 className="text-3xl font-display font-semibold mb-4">Bachelor of Information Technology</h3>
               <p className="text-lg font-medium mb-3">Royal University of Phnom Penh</p>
               <p className="text-muted-foreground leading-relaxed">
@@ -89,8 +94,13 @@ export default function Home() {
               </p>
             </FadeIn>
 
-            <FadeIn delay={0.5} className="flex flex-col">
-              <span className="text-primary font-bold tracking-widest text-sm uppercase mb-2">2024 - Present</span>
+            <FadeIn delay={0.5} className="flex flex-col group">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform duration-500 group-hover:scale-110">
+                  <Database className="w-6 h-6" />
+                </div>
+                <span className="text-primary font-bold tracking-widest text-sm uppercase">2024 - Present</span>
+              </div>
               <h3 className="text-3xl font-display font-semibold mb-4">Master of Data Science & Engineering</h3>
               <p className="text-lg font-medium mb-3">Royal University of Phnom Penh</p>
               <p className="text-muted-foreground leading-relaxed">
@@ -123,15 +133,21 @@ export default function Home() {
                   imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1600"
                 }
               ].map((project, index) => (
-               <FadeIn key={project.title} delay={0.3}>
-                 <ProjectFloatCard
-                   title={project.title}
-                   description={project.description}
-                   tags={project.tags}
-                   imageUrl={project.imageUrl}
-                   align={index % 2 === 0 ? "right" : "left"}
-                 />
-               </FadeIn>
+               <div 
+                 key={project.title} 
+                 className="sticky transition-all duration-300"
+                 style={{ top: `calc(6rem + ${index * 2}rem)` }}
+               >
+                 <FadeIn delay={0.3}>
+                   <ProjectFloatCard
+                     title={project.title}
+                     description={project.description}
+                     tags={project.tags}
+                     imageUrl={project.imageUrl}
+                     align={index % 2 === 0 ? "right" : "left"}
+                   />
+                 </FadeIn>
+               </div>
              ))}
            </div>
         </section>
@@ -169,12 +185,12 @@ export default function Home() {
         <section className="w-full mt-40 pt-20 border-t border-white/[0.05] bg-surface-container-lowest text-center">
           <div className="mx-auto max-w-4xl px-6 pb-20">
             <FadeIn>
-              <h2 className="text-5xl font-display font-bold tracking-tight sm:text-6xl mb-8">Help To Build<br />Your Dream Project</h2>
+              <h2 className="text-5xl font-display font-bold tracking-tight sm:text-6xl mb-8">Let&apos;s Connect <br />& Build Together</h2>
               <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-                I&apos;m currently taking on select high-end freelance projects. Let&apos;s create something that stands out from the noise.
+                I am always open to networking with matching professionals, exchanging ideas, and discussing new career opportunities in tech.
               </p>
               <Button asChild size="lg" className="rounded-full h-16 px-10 text-lg font-bold bg-gradient-primary text-white border-none shadow-[0_0_30px_-10px_rgba(255,144,104,0.4)] hover:opacity-90">
-                <Link href="/contact">Start A Conversation</Link>
+                <Link href="/contact">Say Hello</Link>
               </Button>
             </FadeIn>
           </div>

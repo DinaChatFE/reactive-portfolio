@@ -87,7 +87,7 @@ export function ContactForm() {
           id="message" 
           name="message" 
           required 
-          placeholder="Tell me about your project..." 
+          placeholder="Hey Dina, I'd love to connect..." 
           value={formData.message} 
           onChange={handleChange}
         />

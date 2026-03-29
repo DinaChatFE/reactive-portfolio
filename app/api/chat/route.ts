@@ -1,5 +1,5 @@
 import { openai } from '@ai-sdk/openai';
-import { streamText, tool, convertToModelMessages } from 'ai';
+import { convertToModelMessages, streamText, stepCountIs, tool } from 'ai';
 import { z } from 'zod';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
@@ -34,8 +34,9 @@ export async function POST(req: Request) {
       }
     }
 
-    const { messages = [] } = await req.json();
-    const modelMessages = await convertToModelMessages(messages);
+    const { messages: uiMessages = [] } = await req.json();
+
+    const messages = await convertToModelMessages(uiMessages);
 
     const result = streamText({
       model: openai('gpt-4o'),
@@ -49,16 +50,17 @@ Dina is a Front-End & Full-Stack Developer with about 3 years of experience. Str
 He holds a Bachelor's Degree in Information Technology Engineering (2018-2022) and is currently pursuing a Master's in Data Science and Engineering (2024-Present) at the Royal University of Phnom Penh.
 He is passionate about highly interactive UI, animations (GSAP, Framer Motion), and clean robust architectures, as well as problem-solving using data structures.
 Contact Dina at dinachatfe5@gmail.com.`,
-      messages: modelMessages,
+      messages,
       tools: {
         getInformation: tool({
           description: `get information from your knowledge base to answer questions by choosing the most similarity to response, if it doesn't have, you could response with "I don't have information about that"`,
-          parameters: z.object({
+          inputSchema: z.object({
             question: z.string().describe('the users question'),
-          }),
+          }).strict(),
           execute: async ({ question }) => findRelevantContent(question),
         }),
       },
+      stopWhen: stepCountIs(5),
     });
 
     return result.toUIMessageStreamResponse();

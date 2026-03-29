@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.48",
-    "@ai-sdk/react": "^3.0.139",
+    "@ai-sdk/react": "^3.0.143",
     "@emailjs/browser": "^4.4.1",
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^5.2.2",
@@ -22,7 +22,7 @@
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",
     "@vercel/postgres": "^0.10.0",
-    "ai": "^6.0.138",
+    "ai": "^6.0.141",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.1",

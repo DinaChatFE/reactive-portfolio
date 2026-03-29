@@ -13,15 +13,26 @@ export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState('');
+  const [messageTimes, setMessageTimes] = useState<Record<string, Date>>({});
   
-  const { messages, status, input, handleInputChange, handleSubmit } = useChat({
-    api: '/api/chat'
-  });
+  const { messages, status, error, sendMessage } = useChat();
 
   const isLoading = status === 'submitted' || status === 'streaming';
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isLoading) return;
+    sendMessage({ text: inputValue });
+    setInputValue('');
   };
 
   useEffect(() => {
@@ -36,6 +47,29 @@ export default function ChatAssistant() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    setMessageTimes((prev) => {
+      const next = { ...prev };
+      let changed = false;
+
+      for (const message of messages) {
+        if (!next[message.id]) {
+          next[message.id] = new Date();
+          changed = true;
+        }
+      }
+
+      return changed ? next : prev;
+    });
+  }, [messages]);
+
+  const formatMessageTime = (date?: Date) => {
+    if (!date) return '';
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
@@ -70,12 +104,17 @@ export default function ChatAssistant() {
               )}
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
-                    m.role === 'user' 
-                      ? 'bg-gradient-primary text-white rounded-br-sm' 
-                      : 'glass bg-surface-container-highest/60 text-foreground/90 rounded-bl-sm'
-                  }`}>
-                    {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : (m as any).content || ''}
+                  <div className={`max-w-[85%] ${m.role === 'user' ? 'items-end' : 'items-start'} flex flex-col`}>
+                    <div className={`rounded-2xl px-4 py-2.5 text-sm ${
+                      m.role === 'user' 
+                        ? 'bg-gradient-primary text-white rounded-br-sm' 
+                        : 'glass bg-surface-container-highest/60 text-foreground/90 rounded-bl-sm'
+                    }`}>
+                      {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : (m as any).content || ''}
+                    </div>
+                    <span className="mt-1 px-1 text-[11px] text-muted-foreground/80">
+                      {formatMessageTime(messageTimes[m.id])}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -96,12 +135,12 @@ export default function ChatAssistant() {
           <div className="p-3 border-t border-white/5 bg-surface/40 backdrop-blur-md">
             <form onSubmit={handleSubmit} className="flex items-center gap-2 relative">
               <Input 
-                value={input} 
+                value={inputValue} 
                 onChange={handleInputChange} 
                 placeholder="Message Dina AI..." 
                 className="glass-input h-12 w-full rounded-full border border-white/10 focus:border-primary transition-all px-4 pr-12 text-sm bg-black/20"
               />
-              <Button type="submit" size="icon" disabled={isLoading || !input || input.trim() === ''} className="absolute w-8 h-8 rounded-full bg-gradient-primary text-white right-2 border-0 hover:scale-105 transition-transform">
+              <Button type="submit" size="icon" disabled={isLoading || !inputValue || inputValue.trim() === ''} className="absolute w-8 h-8 rounded-full bg-gradient-primary text-white right-2 border-0 hover:scale-105 transition-transform">
                 <Send className="w-4 h-4 ml-0.5" />
               </Button>
             </form>
