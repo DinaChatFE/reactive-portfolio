@@ -37,6 +37,7 @@ export function ProjectFloatCard({ title, description, imageUrl, tags, align = "
           src={imageUrl} 
           alt={title} 
           fill
+          unoptimized
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
