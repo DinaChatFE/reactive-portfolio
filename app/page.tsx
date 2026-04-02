@@ -1,6 +1,6 @@
 import { ProjectFloatCard } from "@/components/ProjectFloatCard";
 import { FadeIn } from "@/components/animations/FadeIn";
-import { ResearchContributionSection } from "@/components/ResearchContributionSection";
+// import { ResearchContributionSection } from "@/components/ResearchContributionSection";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";

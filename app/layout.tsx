@@ -19,7 +19,31 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: "Dina Chat - Luminous Curator Portfolio",
-  description: "High-End Editorial Portfolio built with Next.js",
+  description: "Personal portfolio of Dina Chat, a Full-Stack Developer and Data Scientist with 6+ years of experience blending professional engineering with high-performance aesthetics.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Dina Chat - Luminous Curator Portfolio",
+    description: "Personal portfolio of Dina Chat, a Full-Stack Developer and Data Scientist with 6+ years of experience blending professional engineering with high-performance aesthetics.",
+    url: "https://dinachat.com",
+    siteName: "Dina Chat Portfolio",
+    images: [
+      {
+        url: "/images/me.jpg",
+        width: 800,
+        height: 600,
+        alt: "Dina Chat Profile",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dina Chat - Luminous Curator Portfolio",
+    description: "Personal portfolio of Dina Chat, a Full-Stack Developer and Data Scientist with 6+ years of experience blending professional engineering with high-performance aesthetics.",
+    images: ["/images/me.jpg"],
+  },
 };
 
 export default function RootLayout({

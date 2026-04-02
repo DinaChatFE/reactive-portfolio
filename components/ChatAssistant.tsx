@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, type ChangeEvent, type FormEvent } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useChat } from '@ai-sdk/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,7 @@ export default function ChatAssistant() {
   const [inputValue, setInputValue] = useState('');
   const [messageTimes, setMessageTimes] = useState<Record<string, Date>>({});
   
-  const { messages, status, error, sendMessage } = useChat();
+  const { messages, status, error, sendMessage, regenerate } = useChat();
 
   const isLoading = status === 'submitted' || status === 'streaming';
 
@@ -51,25 +51,37 @@ export default function ChatAssistant() {
   useEffect(() => {
     if (messages.length === 0) return;
 
-    setMessageTimes((prev) => {
-      const next = { ...prev };
-      let changed = false;
+    // Use a short timeout to prevent synchronous state updates within the effect
+    const timeoutId = setTimeout(() => {
+      setMessageTimes((prev) => {
+        const next = { ...prev };
+        let changed = false;
 
-      for (const message of messages) {
-        if (!next[message.id]) {
-          next[message.id] = new Date();
-          changed = true;
+        for (const message of messages) {
+          if (!next[message.id]) {
+            next[message.id] = new Date();
+            changed = true;
+          }
         }
-      }
 
-      return changed ? next : prev;
-    });
+        return changed ? next : prev;
+      });
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [messages]);
 
   const formatMessageTime = (date?: Date) => {
     if (!date) return '';
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  const fallbackSuggestions = [
+    "Who is Dina?",
+    "What are Dina's tech skills?",
+    "Tell me about projects Dina has worked on",
+    "How can I contact Dina?",
+  ];
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
@@ -95,11 +107,26 @@ export default function ChatAssistant() {
           <ScrollArea className="flex-1 p-4">
             <div className="space-y-4">
               {messages.length === 0 && (
-                <div className="text-center text-muted-foreground text-sm flex flex-col items-center justify-center h-[200px] space-y-3">
-                  <div className="w-12 h-12 rounded-full glass flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5 text-primary" />
+                <div className="flex flex-col items-center justify-center min-h-[250px] space-y-6 pt-10 pb-8">
+                  <div className="text-center text-muted-foreground text-sm flex flex-col items-center space-y-3">
+                    <div className="w-12 h-12 rounded-full glass flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-primary" />
+                    </div>
+                    <p>Hi! I&apos;m Dina&apos;s AI Assistant.<br/> How can I help you today?</p>
                   </div>
-                  <p>Hi! I&apos;m Dina&apos;s AI Assistant.<br/> How can I help you today?</p>
+                  
+                  <div className="flex flex-wrap justify-center gap-2 max-w-[90%] mx-auto">
+                    {fallbackSuggestions.map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        onClick={() => sendMessage({ text: suggestion })}
+                        disabled={isLoading}
+                        className="text-xs px-3 py-1.5 rounded-full border border-white/10 bg-surface-container-low hover:bg-primary/20 hover:border-primary/40 hover:text-primary transition-colors text-foreground/80 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
               {messages.map((m) => (
@@ -110,7 +137,7 @@ export default function ChatAssistant() {
                         ? 'bg-gradient-primary text-white rounded-br-sm' 
                         : 'glass bg-surface-container-highest/60 text-foreground/90 rounded-bl-sm'
                     }`}>
-                      {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : (m as any).content || ''}
+                      {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : m.content || ''}
                     </div>
                     <span className="mt-1 px-1 text-[11px] text-muted-foreground/80">
                       {formatMessageTime(messageTimes[m.id])}
@@ -125,6 +152,24 @@ export default function ChatAssistant() {
                     <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{animationDelay: '0.15s'}}/>
                     <div className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{animationDelay: '0.3s'}}/>
                   </div>
+                </div>
+              )}
+              {error && (
+                <div className="flex flex-col items-center justify-center space-y-2 pt-2">
+                  <div className="text-destructive text-sm bg-destructive/10 px-4 py-2 rounded-xl text-center">
+                    Oops! Something went wrong. <br />
+                    {error.message || "Please try again."}
+                  </div>
+                  {regenerate && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => regenerate()}
+                      className="rounded-full border-primary/30 text-primary hover:bg-surface-variant/60"
+                    >
+                      Retry Sending
+                    </Button>
+                  )}
                 </div>
               )}
               <div ref={messagesEndRef} />
