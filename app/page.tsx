@@ -1,16 +1,18 @@
 import { ProjectFloatCard } from "@/components/ProjectFloatCard";
 import { FadeIn } from "@/components/animations/FadeIn";
+import { ResearchContributionSection } from "@/components/ResearchContributionSection";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, LayoutPanelLeft, Code, LineChart, Terminal, Database } from "lucide-react";
+import { Download, LayoutPanelLeft, Code, LineChart, Terminal, Database } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-transparent font-sans">
-      <main className="relative z-10 flex min-h-screen flex-col items-center pt-40 md:pt-48 pb-16">
+    <div className="relative min-h-screen overflow-hidden bg-transparent font-sans pt-8">
+      <main className="relative z-10 flex min-h-screen flex-col items-center pt-40 md:pt-48">
         {/* HERO SECTION */}
-        <section className="mx-auto flex w-full max-w-6xl flex-col items-start px-6">
+        <section className="mx-auto flex w-full max-w-6xl flex-col items-start px-6 pb-20">
           <FadeIn>
             <Badge variant="secondary" className="mb-6 rounded-full px-4 py-1.5 text-xs font-semibold tracking-wider font-sans bg-secondary/80 text-secondary-foreground uppercase">
               Digital Artistry & Code
@@ -30,13 +32,71 @@ export default function Home() {
                 <Link href="#work">Explore Projects</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-md font-bold bg-surface-variant/40 backdrop-blur-[12px] border-primary/30 text-primary hover:bg-surface-variant/60 gap-2">
-                <Link href="#showreel">
-                  <Play className="w-4 h-4 fill-current" />
-                  Watch Showreel
-                </Link>
+                <a href="/resume.pdf" download>
+                  <Download className="w-4 h-4 fill-current" />
+                  Download Resume
+                </a>
               </Button>
             </div>
           </FadeIn>
+        </section>
+        <div className="w-full max-w-6xl mx-auto mt-32 mb-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* ABOUT / MEET DINA SECTION */}
+        <section id="about" className="w-full mt-40 mx-auto max-w-6xl px-6 scroll-mt-32">
+          <div className="grid gap-12 md:grid-cols-[240px_1fr] md:gap-16 items-start">
+            <FadeIn className="flex flex-col gap-6 w-full max-w-[240px] mx-auto md:mx-0">
+              <div className="relative aspect-square w-full rounded-3xl overflow-hidden glass-card p-1 border border-white/5">
+                <div className="relative w-full h-full rounded-[1.35rem] overflow-hidden bg-surface-container-low">
+                  <Image 
+                    src="/images/me.jpg" 
+                    alt="Dina" 
+                    fill 
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
+
+              <div className="w-full h-px bg-white/10 my-2" />
+              
+              <div className="flex flex-col gap-6 px-2 text-sm">
+                <div>
+                  <p className="text-primary font-bold tracking-widest text-[10px] uppercase mb-1">Based in</p>
+                  <p className="font-semibold text-foreground">Phnom Penh, KH</p>
+                </div>
+                <div>
+                  <p className="text-primary font-bold tracking-widest text-[10px] uppercase mb-1">Experience</p>
+                  <p className="font-semibold text-foreground">6+ Years</p>
+                </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.2} className="flex flex-col max-w-2xl">
+              <p className="text-primary font-bold tracking-widest text-sm uppercase mb-4">Meet Dina</p>
+              <h2 className="text-4xl font-display font-bold tracking-tight sm:text-5xl mb-8 leading-tight">
+                A Journey of Code & Curiosity
+              </h2>
+              
+              <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                <p>
+                  Hello, I&apos;m Dina. I believe that digital platforms should be as much a piece of art as they are functional tools. My background in IT Engineering and a specialized Master&apos;s in Data Science allows me to approach problems with a dual lens: technical precision and human-centric design.
+                </p>
+                <p>
+                  When I&apos;m not architecting complex data pipelines or refining Vue components, you can find me diving deep into open-source research or mentoring the next generation of developers in Phnom Penh. For me, every line of code is a step toward a more intuitive, luminous digital future.
+                </p>
+                <p>
+                  I specialize in creating seamless connections between data and interface, ensuring that the back-end complexity is translated into a fluid, meaningful experience for the end-user.
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-surface-container-low border border-white/10 text-sm font-medium">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+                  Available for new projects
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </section>
 
         {/* SERVICES SECTION */}
@@ -72,7 +132,7 @@ export default function Home() {
             ))}
           </div>
         </section>
-
+        <div className="w-full max-w-6xl mx-auto mt-32 mb-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         {/* JOURNEY SECTION */}
         <section id="educations" className="w-full mt-40 mx-auto max-w-6xl px-6 scroll-mt-32">
           <FadeIn delay={0.3}>
@@ -110,8 +170,14 @@ export default function Home() {
           </div>
         </section>
 
+        {/* 
+        <div className="w-full max-w-6xl mx-auto mt-32 mb-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        <ResearchContributionSection /> 
+        */}
+      <div className="w-full max-w-6xl mx-auto mt-32 mb-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         {/* FEATURED WORK / PROJECTS */}
-        <section id="work" className="w-full mt-40 scroll-mt-32">
+        <section id="work" className="w-full mt-32 scroll-mt-32">
            <div className="mx-auto max-w-6xl px-6 mb-20 text-center">
              <FadeIn delay={0.2}>
                <h2 className="text-4xl font-display font-bold tracking-tight sm:text-5xl">Curated Projects</h2>
@@ -121,16 +187,16 @@ export default function Home() {
            <div className="flex flex-col gap-32 pb-16 px-6">
              {[
                 {
-                  title: "Luminous Aesthetics",
-                  description: "An intelligent chatbot interface built with Next.js and Tailwind CSS featuring real-time streaming and custom tool calling.",
-                  tags: ["Next.js", "OpenAI", "Tailwind"],
-                  imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1600"
+                  title: "OpenClaw Assistant",
+                  description: "An intelligent Telegram bot functioning as a daily life assistant. It handles everything from automating routine tasks, logging workouts, to drafting blog posts seamlessly.",
+                  tags: ["TypeScript", "Telegram API", "AI Integration"],
+                  imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1600"
                 },
                 {
-                  title: "The Silent Grid",
-                  description: "A modern, animated developer portfolio with floating glass components, smooth transitions, and seamless dark mode.",
-                  tags: ["React", "Framer Motion", "Shadcn UI"],
-                  imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1600"
+                  title: "Reactive Portfolio",
+                  description: "This very website—a modern, high-performance developer portfolio featuring smooth Framer Motion aesthetics, glassmorphism, and a luminous dark-mode design system.",
+                  tags: ["Next.js", "Tailwind CSS", "React"],
+                  imageUrl: "https://images.unsplash.com/photo-1618477247222-ac60c8e147bc?auto=format&fit=crop&q=80&w=1600"
                 }
               ].map((project, index) => (
                <div 
