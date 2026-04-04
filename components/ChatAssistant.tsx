@@ -137,7 +137,7 @@ export default function ChatAssistant() {
                         ? 'bg-gradient-primary text-white rounded-br-sm' 
                         : 'glass bg-surface-container-highest/60 text-foreground/90 rounded-bl-sm'
                     }`}>
-                      {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : m.content || ''}
+                      {m.parts ? m.parts.map(p => p.type === 'text' ? p.text : '').join('') : (m as any).content || ''}
                     </div>
                     <span className="mt-1 px-1 text-[11px] text-muted-foreground/80">
                       {formatMessageTime(messageTimes[m.id])}

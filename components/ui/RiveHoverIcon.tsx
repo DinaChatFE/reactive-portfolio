@@ -1,6 +1,6 @@
 "use client";
 
-import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { useRive, useStateMachineInput, EventType } from "@rive-app/react-canvas";
 import React, { useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -19,18 +19,20 @@ export function RiveHoverIcon({
   className,
   fallback,
 }: RiveHoverIconProps) {
-  const { RiveComponent, setInputState, rive } = useRive({
+  const { RiveComponent, rive } = useRive({
     src,
     stateMachines: stateMachineName,
     autoplay: true,
-    onError: () => console.warn(`Failed to load Rive file: ${src}`),
+    onLoadError: () => console.warn(`Failed to load Rive file: ${src}`),
   });
+
+  const hoverInput = useStateMachineInput(rive, stateMachineName, hoverInputName);
 
   const [hasError, setHasError] = React.useState(false);
 
   useEffect(() => {
     if (rive) {
-      rive.on('loaderror', () => setHasError(true));
+      rive.on(EventType.LoadError, () => setHasError(true));
     }
   }, [rive]);
 
@@ -41,8 +43,8 @@ export function RiveHoverIcon({
   return (
     <div 
       className={cn("relative transition-transform duration-300", className)}
-      onMouseEnter={() => setInputState(stateMachineName, hoverInputName, true)}
-      onMouseLeave={() => setInputState(stateMachineName, hoverInputName, false)}
+      onMouseEnter={() => { if (hoverInput) hoverInput.value = true; }}
+      onMouseLeave={() => { if (hoverInput) hoverInput.value = false; }}
     >
       <RiveComponent />
     </div>
