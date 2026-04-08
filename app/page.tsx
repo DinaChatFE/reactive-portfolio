@@ -196,7 +196,7 @@ export default function Home() {
                   title: "Reactive Portfolio",
                   description: "This very website—a modern, high-performance developer portfolio featuring smooth Framer Motion aesthetics, glassmorphism, and a luminous dark-mode design system.",
                   tags: ["Next.js", "Tailwind CSS", "React"],
-                  imageUrl: "https://images.unsplash.com/photo-1618477247222-ac60c8e147bc?auto=format&fit=crop&q=80&w=1600"
+                  imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1600"
                 }
               ].map((project, index) => (
                <div 
