@@ -4,6 +4,7 @@ import "./globals.css";
 import GlassBubbles from "@/components/GlassBubbles";
 import ChatAssistant from "@/components/ChatAssistant";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
 
 import { Navbar } from "@/components/Navbar";
 
@@ -62,6 +63,7 @@ export default function RootLayout({
         {children}
         <ChatAssistant />
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );

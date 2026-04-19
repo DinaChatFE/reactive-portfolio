@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { NotificationBell } from "./NotificationBell";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -156,7 +157,8 @@ export function Navbar() {
           })}
         </ul>
 
-        <div>
+        <div className="flex items-center gap-2 md:gap-4">
+          <NotificationBell />
           <Button asChild className="rounded-full bg-gradient-primary text-white hover:opacity-90 font-bold border-0 h-10 px-6 hidden md:inline-flex">
             <Link href="/contact">Let&apos;s Talk</Link>
           </Button>
