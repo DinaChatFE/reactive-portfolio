@@ -32,7 +32,7 @@ export default function Home() {
                 <Link href="#work">Explore Projects</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-md font-bold bg-surface-variant/40 backdrop-blur-[12px] border-primary/30 text-primary hover:bg-surface-variant/60 gap-2">
-                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/dina_resume.pdf" target="_blank" rel="noopener noreferrer">
                   <Download className="w-4 h-4 fill-current" />
                   Download Resume
                 </a>
