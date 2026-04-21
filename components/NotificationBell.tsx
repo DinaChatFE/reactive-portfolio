@@ -20,8 +20,8 @@ interface Notification {
 const NOTIFICATIONS: Notification[] = [
   {
     id: "1",
-    title: "Dina Sets Open Hiring",
-    description: "We are currently looking for talented individuals to join our team! Reach out via contact if interested.",
+    title: "Dina is open for new job",
+    description: "I am currently looking for new career opportunities! Reach out via contact if interested.",
     date: "Just now",
     href: "/contact",
   },

@@ -32,7 +32,7 @@ export default function Home() {
                 <Link href="#work">Explore Projects</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full h-14 px-8 text-md font-bold bg-surface-variant/40 backdrop-blur-[12px] border-primary/30 text-primary hover:bg-surface-variant/60 gap-2">
-                <a href="/resume.pdf" download>
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
                   <Download className="w-4 h-4 fill-current" />
                   Download Resume
                 </a>
@@ -92,7 +92,7 @@ export default function Home() {
               <div className="mt-10">
                 <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-surface-container-low border border-white/10 text-sm font-medium">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                  Available for new projects
+                  Open for new job
                 </div>
               </div>
             </FadeIn>

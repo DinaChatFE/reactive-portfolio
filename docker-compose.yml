@@ -1,0 +1,18 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      # Named volumes to persist the container's generated directories
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      # Enable polling for hot reloading (often needed when using Docker volumes)
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+
