@@ -25,7 +25,8 @@ export async function POST(req: Request) {
     const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
     
     if (ratelimit) {
-      const { success } = await ratelimit.limit(ip);
+      // Prefix the identifier to avoid conflicting with the contact rate limit
+      const { success } = await ratelimit.limit(`chat_${ip}`);
       if (!success) {
         return new NextResponse(
           JSON.stringify({ error: 'Rate limit exceeded', message: 'Too many requests. Please try again later.' }), 

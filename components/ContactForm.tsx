@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import emailjs from "emailjs-com";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -29,25 +28,33 @@ export function ContactForm() {
     setLoading(true);
 
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_at36o0b', 
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_y68ovpg',
-        {
-          from_name: formData.name,
-          reply_to: formData.email,
-          message: formData.message,
-          to_name: "Dina Chat"
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
-      );
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        if (response.status === 429 && errorData?.message) {
+          throw new Error(errorData.message);
+        }
+        throw new Error('Failed to send message');
+      }
       
       toast.success("Message sent successfully!", {
         description: "I'll get back to you as soon as possible."
       });
       setFormData({ name: "", email: "", message: "" });
-    } catch (err) {
-      toast.error("Failed to send message.", {
-        description: "Please try again later or reach out directly."
+    } catch (err: any) {
+      toast.error(err.message === 'Failed to send message' ? "Failed to send message." : "Rate limit exceeded", {
+        description: err.message === 'Failed to send message' ? "Please try again later or reach out directly." : err.message
       });
     } finally {
       setLoading(false);
