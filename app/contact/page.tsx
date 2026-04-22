@@ -54,8 +54,8 @@ export default function Contact() {
               <div className="flex items-center gap-2 text-xs font-sans tracking-[3px] text-tertiary uppercase font-bold">
                 <Mail className="h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-12 group-hover:text-primary" /> Email
               </div>
-              <a href="mailto:dinachatfe5@gmail.com" className="text-lg font-sans text-foreground hover:text-primary transition-colors">
-                dinachatfe5@gmail.com
+              <a href="me@dinachat.com" className="text-lg font-sans text-foreground hover:text-primary transition-colors">
+                me@dinachat.com
               </a>
             </div>
             
@@ -72,17 +72,8 @@ export default function Contact() {
               <div className="flex items-center gap-2 text-xs font-sans tracking-[3px] text-tertiary uppercase font-bold">
                 <GithubIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:-translate-y-1 group-hover:text-primary" /> GitHub
               </div>
-              <a href="https://github.com/dinachat" target="_blank" rel="noopener noreferrer" className="text-lg font-sans text-foreground hover:text-primary transition-colors">
-                github.com/dinachat
-              </a>
-            </div>
-
-            <div className="group flex flex-col gap-2 p-6 rounded-xl bg-surface-container-low border-0 shadow-sm transition-all hover:bg-surface-container-highest">
-              <div className="flex items-center gap-2 text-xs font-sans tracking-[3px] text-primary-container uppercase font-bold">
-                <FacebookIcon className="h-4 w-4 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6 group-hover:text-primary" /> Facebook
-              </div>
-              <a href="https://facebook.com/dinachat" target="_blank" rel="noopener noreferrer" className="text-lg font-sans text-foreground hover:text-primary transition-colors">
-                facebook.com/dinachat
+              <a href="https://github.com/DinaChatFE" target="_blank" rel="noopener noreferrer" className="text-lg font-sans text-foreground hover:text-primary transition-colors">
+                github.com/DinaChatFE
               </a>
             </div>
           </FadeIn>
