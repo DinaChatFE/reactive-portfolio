@@ -64,8 +64,13 @@ Contact Dina at dinachatfe5@gmail.com.`,
     });
 
     return result.toUIMessageStreamResponse();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Chat API Error:', error);
-    return new NextResponse(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
+    
+    // Return a proper error message response that the frontend can display
+    return new NextResponse(
+      'Sorry, I encountered an issue generating a response. Please try again later.', 
+      { status: 500 }
+    );
   }
 }

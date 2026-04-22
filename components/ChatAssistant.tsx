@@ -158,7 +158,7 @@ export default function ChatAssistant() {
                 <div className="flex flex-col items-center justify-center space-y-2 pt-2">
                   <div className="text-destructive text-sm bg-destructive/10 px-4 py-2 rounded-xl text-center">
                     Oops! Something went wrong. <br />
-                    {error.message || "Please try again."}
+                    Sorry, I couldn't generate a response right now. Please try again later.
                   </div>
                   {regenerate && (
                     <Button 
