@@ -22,3 +22,14 @@ export const embeddings = pgTable('embeddings', {
 }, (table) => ({
   embeddingIndex: index('embeddingIndex').using('hnsw', table.embedding.op('vector_cosine_ops')),
 }));
+
+export const blogs = pgTable('blogs', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  category: text('category').notNull(),
+  date: text('date').notNull(),
+  readTime: text('read_time').notNull(),
+  image: text('image').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+});
