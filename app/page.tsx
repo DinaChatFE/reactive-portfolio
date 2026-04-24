@@ -6,8 +6,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, LayoutPanelLeft, Code, LineChart, Terminal, Database } from "lucide-react";
+import { Suspense } from "react";
+import { LatestBlogs, LatestBlogsSkeleton } from "@/components/LatestBlogs";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent font-sans pt-8">
       <main className="relative z-10 flex min-h-screen flex-col items-center pt-40 md:pt-48">
@@ -227,24 +230,9 @@ export default function Home() {
             </Link>
           </FadeIn>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              { date: "March 12, 2024", cat: "Design", title: "The Psychology of Transparency in UI", desc: "How glassmorphism affects user trust and cognitive load in high-end dashboards." },
-              { date: "Feb 28, 2024", cat: "Code", title: "Performance in the Era of Blurs", desc: "Optimizing CSS backdrop filters for a silky smooth 60fps experience on mobile." },
-              { date: "Jan 15, 2024", cat: "Branding", title: "Minimalism as a Luxury Statement", desc: "Why expensive brands are moving towards ultra-simple, typography-focused identities." }
-            ].map((post, i) => (
-              <FadeIn key={post.title} delay={0.4 + i * 0.1}>
-                <div className="group cursor-pointer flex flex-col h-full bg-surface-container-low hover:bg-surface-container transition-colors duration-300 rounded-[1.5rem] p-8 border border-white/5 hover:border-white/10">
-                  <div className="flex gap-4 mb-6">
-                    <span className="text-primary text-xs font-bold uppercase tracking-wider">{post.cat}</span>
-                    <span className="text-muted-foreground text-xs uppercase tracking-wider">{post.date}</span>
-                  </div>
-                  <h3 className="text-2xl font-display font-semibold mb-4 group-hover:text-primary transition-colors">{post.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed flex-1">{post.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <Suspense fallback={<LatestBlogsSkeleton />}>
+            <LatestBlogs />
+          </Suspense>
         </section>
 
         {/* CTA FOOTER */}
